@@ -34,6 +34,9 @@ class TaskListView(generic.ListView):
     context_object_name = "tasks"
     template_name = "task_list.html"
 
+    def get_queryset(self):
+        return Task.objects.prefetch_related('tags').order_by('is_done', '-datetime')
+
 
 class TaskCreateView(generic.CreateView):
     model = Task
