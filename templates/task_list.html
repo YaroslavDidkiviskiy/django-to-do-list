@@ -35,7 +35,7 @@
           <a href="{% url 'todo:task-delete' pk=task.id %}" class="text-primary">Delete</a>
         </p>
 
-        <!-- Toggle Status Form -->
+        <!-- Toggle Status Button -->
         <form method="post" action="{% url 'todo:toggle-task' pk=task.id %}" class="d-inline">
           {% csrf_token %}
           {% if task.is_done %}
