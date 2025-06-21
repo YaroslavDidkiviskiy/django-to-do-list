@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Tag(models.Model):
@@ -7,6 +8,8 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("todo:tag-list")
 
 class Task(models.Model):
     content = models.TextField()
@@ -19,3 +22,7 @@ class Task(models.Model):
         tags = ', '.join(tag.name for tag in self.tags.all()[:3])
         status = '✓' if self.is_done else '◻'
         return f"{status} {self.content[:50]}{'...' if len(self.content) > 50 else ''} [Теги: {tags}]"
+
+
+    def get_absolute_url(self):
+        return reverse("todo:task-list")

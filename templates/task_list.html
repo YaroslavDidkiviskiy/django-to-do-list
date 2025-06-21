@@ -4,7 +4,7 @@
   <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h1 class="mb-0">TODO list</h1>
-      <a href="#" class="btn btn-primary">Add task</a>
+      <a href="{% url 'todo:task-create' %}" class="btn btn-primary">Add task</a>
     </div>
 
     {% for task in tasks %}
@@ -31,15 +31,19 @@
           {% empty %}
             <span class="text-muted">No tags</span>
           {% endfor %}
-          <a href="#" class="ms-2 text-primary">Update</a>
-          <a href="#" class="text-primary">Delete</a>
+          <a href="{% url 'todo:task-update' pk=task.id %}" class="ms-2 text-primary">Update</a>
+          <a href="{% url 'todo:task-delete' pk=task.id %}" class="text-primary">Delete</a>
         </p>
 
-        {% if task.is_done %}
-          <button class="btn btn-secondary btn-sm">Undo</button>
-        {% else %}
-          <button class="btn btn-success btn-sm">Complete</button>
-        {% endif %}
+        <!-- Toggle Status Form -->
+        <form method="post" action="{% url 'todo:toggle-task' pk=task.id %}" class="d-inline">
+          {% csrf_token %}
+          {% if task.is_done %}
+            <button type="submit" class="btn btn-warning btn-sm">Undo</button>
+          {% else %}
+            <button type="submit" class="btn btn-success btn-sm">Complete</button>
+          {% endif %}
+        </form>
       </div>
     {% endfor %}
   </div>
